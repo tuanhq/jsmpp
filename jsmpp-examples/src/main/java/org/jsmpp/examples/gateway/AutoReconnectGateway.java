@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
  * @author uudashr
  * 
  */
+
 public class AutoReconnectGateway implements Gateway {
     private static final Logger logger = LoggerFactory.getLogger(AutoReconnectGateway.class);
     private SMPPSession session = null;
@@ -60,6 +61,9 @@ public class AutoReconnectGateway implements Gateway {
      * @param bindParam is the SMPP Bind parameters.
      * @throws IOException
      */
+    public void closeSession(){
+    	this.session.unbindAndClose();
+    }
     public AutoReconnectGateway(String remoteIpAddress, int remotePort,
             BindParameter bindParam) throws IOException {
         this.remoteIpAddress = remoteIpAddress;

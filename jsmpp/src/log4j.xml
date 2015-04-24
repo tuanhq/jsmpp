@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="FATALS" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/opt/log4j1/logfatal/log.log"/>
+        <param name="DatePattern" value="yyyyMMddHHmm'.txt'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="FATAL"/>
+            <param name="LevelMax" value="FATAL"/>
+        </filter>
+    </appender>
+    <appender name="ERRORS" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/opt/log4j1/logerrors/log.log"/>
+        <param name="MaxFileSize" value="100KB"/>
+        <param name="MaxBackupIndex" value="100"/>
+        <param name="Threshold" value="ERROR"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p [%d] %C (%M:%L) - %m%n"/>
+        </layout>
+    </appender>
+    <appender name="INFOS" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/opt/log4j1/loginfors/log.log"/>
+        <param name="DatePattern" value="yyyyMMdd'.txt'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="INFO"/>
+        </filter>
+    </appender>
+    <root>
+        <priority value="info"></priority>
+        <appender-ref ref="FATALS"/>
+        <appender-ref ref="ERRORS"/>
+        <appender-ref ref="INFOS"/>
+    </root>
+</log4j:configuration>

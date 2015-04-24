@@ -289,15 +289,25 @@ public class SMPPSession extends AbstractSession implements ClientSession {
 			throws PDUException, ResponseTimeoutException,
 			InvalidResponseException, NegativeResponseException, IOException {
 	    
+		    logger.error("bindType:" + bindType + "-systemId:" + systemId +  
+		    		"-password:" + password +"-systemType:" + systemType +"-interfaceVersion:"
+		    		+ interfaceVersion + "-addrTon:" + addrTon + "-addrNpi:" + addrNpi + "-addressRange:" +addressRange );
+		
 	    BindCommandTask task = new BindCommandTask(pduSender(), bindType,
                 systemId, password, systemType, interfaceVersion, addrTon,
                 addrNpi, addressRange);
 	    
 	    BindResp resp = (BindResp)executeSendCommand(task, timeout);
-	    OptionalParameter.Sc_interface_version sc_version = resp.getOptionalParameter(Sc_interface_version.class);
-	    if(sc_version != null) {
-		    logger.info("Other side reports smpp interface version {}", sc_version);
-	    }
+	    try {
+	    	OptionalParameter.Sc_interface_version sc_version = resp.getOptionalParameter(Sc_interface_version.class);
+		    if(sc_version != null) {
+			    logger.info("Other side reports smpp interface version {}", sc_version);
+		    }
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+	    
         
 		return resp.getSystemId();
 	}
